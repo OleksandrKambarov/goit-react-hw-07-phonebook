@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   addContactThunk,
   deleteContactThunk,
-  getContactsThunk,
+  fetchContactsThunk,
 } from './operations/contactsThunk';
 
 const contactsInitialState = { items: [], error: null, isLoading: false };
@@ -12,15 +12,15 @@ const contactSlice = createSlice({
   initialState: contactsInitialState,
   extraReducers: builder => {
     builder
-      .addCase(getContactsThunk.pending, state => {
+      .addCase(fetchContactsThunk.pending, state => {
         state.isLoading = true;
       })
-      .addCase(getContactsThunk.fulfilled, (state, action) => {
+      .addCase(fetchContactsThunk.fulfilled, (state, action) => {
         state.items = action.payload;
         state.error = null;
         state.isLoading = false;
       })
-      .addCase(getContactsThunk.rejected, (state, action) => {
+      .addCase(fetchContactsThunk.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
       })

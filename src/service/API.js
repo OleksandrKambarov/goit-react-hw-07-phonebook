@@ -4,7 +4,7 @@ const contactsAPI = axios.create({
   baseURL: 'https://63cfcd701098240437866cc0.mockapi.io/contacts/',
 });
 
-export const getContacts = async () => {
+export const fetchContacts = async () => {
   const { data } = await contactsAPI.get();
   return data;
 };
