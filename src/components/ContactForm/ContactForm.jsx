@@ -1,10 +1,13 @@
-import styles from './ContactForm.module.css';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContactThunk } from 'redux/operations/contactsThunk';
+import { selectContacts } from 'redux/selectors/selectors';
+
+import styles from './ContactForm.module.css';
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -13,8 +16,10 @@ export const ContactForm = () => {
       name: e.target.elements.name.value,
       number: e.target.elements.number.value,
     };
-    dispatch(addContactThunk(newObj));
 
+    if (contacts.find(i => i.name.toLowerCase() === newObj.name.toLowerCase()))
+      return alert(`${newObj.name} is already in contacts`);
+    dispatch(addContactThunk(newObj));
     e.target.reset();
   };
 
@@ -22,7 +27,7 @@ export const ContactForm = () => {
     <form onSubmit={handleSubmit} className={styles.form}>
       <label>
         <input
-          className={styles.inputField}
+          className={styles.form__label}
           placeholder="Name"
           type="text"
           name="name"
@@ -34,8 +39,8 @@ export const ContactForm = () => {
 
       <label>
         <input
-          className={styles.inputField}
-          placeholder="Phone number"
+          className={styles.form__label}
+          placeholder="Phone number   + XX (YYY) XXX XX XX"
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -44,7 +49,7 @@ export const ContactForm = () => {
         />
       </label>
 
-      <button type="submit" className={styles.button}>
+      <button type="submit" className={styles.form__button}>
         Add Contact
       </button>
     </form>

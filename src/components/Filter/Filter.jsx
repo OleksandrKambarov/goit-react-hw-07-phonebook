@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { filterContacts } from 'redux/filterSlice';
 import { selectFilter } from 'redux/selectors/selectors';
+
 import styles from './Filter.module.css';
 
 export const Filter = () => {
@@ -19,7 +20,7 @@ export const Filter = () => {
           placeholder="Find contacts by name..."
           value={filter}
           onChange={showFilteredContacts}
-          className={styles.inputField}
+          className={styles.search}
         />
       </label>
     </div>
